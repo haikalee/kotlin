@@ -105,6 +105,7 @@
         <editorNotificationProvider implementation="org.jetbrains.kotlin.idea.configuration.KotlinSetupEnvironmentNotificationProvider"/>
         <postStartupActivity implementation="org.jetbrains.kotlin.idea.configuration.JvmStartupActivity"/>
 
+        <postStartupActivity implementation="org.jetbrains.kotlin.idea.JvmPluginStartupActivity"/>
         <postStartupActivity implementation="org.jetbrains.kotlin.idea.compiler.KotlinCompilerStartupActivity"/>
         <postStartupActivity implementation="org.jetbrains.kotlin.idea.scratch.ScratchFileModuleInfoProvider"/>
 

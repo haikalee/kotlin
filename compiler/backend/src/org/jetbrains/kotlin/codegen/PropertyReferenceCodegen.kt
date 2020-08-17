@@ -30,6 +30,7 @@ import org.jetbrains.kotlin.psi.KtElement
 import org.jetbrains.kotlin.resolve.PropertyImportedFromObject
 import org.jetbrains.kotlin.resolve.descriptorUtil.builtIns
 import org.jetbrains.kotlin.resolve.descriptorUtil.getSuperClassNotAny
+import org.jetbrains.kotlin.resolve.descriptorUtil.module
 import org.jetbrains.kotlin.resolve.isInlineClassType
 import org.jetbrains.kotlin.resolve.isUnderlyingPropertyOfInlineClass
 import org.jetbrains.kotlin.resolve.jvm.AsmTypes.*
@@ -352,7 +353,7 @@ class PropertyReferenceCodegen(
                     codegen.frameMap.getIndex(
                         codegen.context.functionDescriptor.valueParameters.last()
                     ),
-                    OBJECT_TYPE, null
+                    OBJECT_TYPE, originalFunctionDesc.module.builtIns.nullableAnyType
                 )
 
                 value.store(

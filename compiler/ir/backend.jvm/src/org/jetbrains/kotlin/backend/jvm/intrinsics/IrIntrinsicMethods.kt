@@ -113,7 +113,10 @@ class IrIntrinsicMethods(val irBuiltIns: IrBuiltIns, val symbols: JvmSymbols) {
                 symbols.unsafeCoerceIntrinsic.toKey()!! to UnsafeCoerce,
                 symbols.signatureStringIntrinsic.toKey()!! to SignatureString,
                 symbols.reassignParameterIntrinsic.toKey()!! to ReassignParameter,
-                symbols.ThrowKotlinNothingValueException.toKey()!! to ThrowKotlinNothingValueException
+                symbols.throwNullPointerException.toKey()!! to ThrowException(Type.getObjectType("java/lang/NullPointerException")),
+                symbols.throwTypeCastException.toKey()!! to ThrowException(Type.getObjectType("kotlin/TypeCastException")),
+                symbols.throwUnsupportedOperationException.toKey()!! to ThrowException(Type.getObjectType("java/lang/UnsupportedOperationException")),
+                symbols.throwKotlinNothingValueException.toKey()!! to ThrowKotlinNothingValueException,
             ) +
                     numberConversionMethods() +
                     unaryFunForPrimitives("plus", UnaryPlus) +

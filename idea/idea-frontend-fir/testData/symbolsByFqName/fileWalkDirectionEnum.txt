@@ -2,39 +2,42 @@ callable: kotlin/collections/listOf
 
 // SYMBOLS:
 KtFirFunctionSymbol:
-  fqName: kotlin.collections.listOf
+  callableIdIfNonLocal: kotlin.collections.listOf
   isExtension: false
   isOperator: false
   isSuspend: false
   modality: FINAL
   name: listOf
   origin: LIBRARY
+  receiverType: null
   symbolKind: TOP_LEVEL
   type: kotlin/collections/List<T>
   typeParameters: [KtFirTypeParameterSymbol(T)]
   valueParameters: [KtFirFunctionValueParameterSymbol(element)]
 
 KtFirFunctionSymbol:
-  fqName: kotlin.collections.listOf
+  callableIdIfNonLocal: kotlin.collections.listOf
   isExtension: false
   isOperator: false
   isSuspend: false
   modality: FINAL
   name: listOf
   origin: LIBRARY
+  receiverType: null
   symbolKind: TOP_LEVEL
   type: kotlin/collections/List<T>
   typeParameters: [KtFirTypeParameterSymbol(T)]
   valueParameters: []
 
 KtFirFunctionSymbol:
-  fqName: kotlin.collections.listOf
+  callableIdIfNonLocal: kotlin.collections.listOf
   isExtension: false
   isOperator: false
   isSuspend: false
   modality: FINAL
   name: listOf
   origin: LIBRARY
+  receiverType: null
   symbolKind: TOP_LEVEL
   type: kotlin/collections/List<T>
   typeParameters: [KtFirTypeParameterSymbol(T)]

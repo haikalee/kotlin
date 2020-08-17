@@ -270,3 +270,26 @@ private fun FirDeclaration.hasBody(): Boolean = when (this) {
     is FirProperty -> this.setter?.body !is FirEmptyExpressionBlock? || this.getter?.body !is FirEmptyExpressionBlock?
     else -> false
 }
+
+/**
+ * Finds any non-interface supertype and returns it
+ * or null if couldn't find any.
+ */
+fun FirClass<*>.findNonInterfaceSupertype(context: CheckerContext): FirTypeRef? {
+    for (it in superTypeRefs) {
+        val classId = it.safeAs<FirResolvedTypeRef>()
+            ?.type.safeAs<ConeClassLikeType>()
+            ?.lookupTag?.classId
+            ?: continue
+
+        val fir = context.session.firSymbolProvider.getClassLikeSymbolByFqName(classId)
+            ?.fir.safeAs<FirClass<*>>()
+            ?: continue
+
+        if (fir.classKind != ClassKind.INTERFACE) {
+            return it
+        }
+    }
+
+    return null
+}

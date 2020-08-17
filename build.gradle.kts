@@ -187,7 +187,7 @@ extra["versions.kotlinx-collections-immutable-jvm"] = immutablesVersion
 extra["versions.ktor-network"] = "1.0.1"
 
 if (!project.hasProperty("versions.kotlin-native")) {
-    extra["versions.kotlin-native"] = "1.4-M3-dev-15627"
+    extra["versions.kotlin-native"] = "1.4.20-dev-16314"
 }
 
 val intellijUltimateEnabled by extra(project.kotlinBuildProperties.intellijUltimateEnabled)
@@ -455,6 +455,16 @@ allprojects {
 
     tasks.withType<Test> {
         outputs.doNotCacheIf("https://youtrack.jetbrains.com/issue/KT-37089") { true }
+    }
+
+    tasks.withType<SourceTask>().configureEach {
+        doFirst {
+            source.visit {
+                if (file.isDirectory && file.listFiles()?.isEmpty() == true) {
+                    logger.warn("Empty source directories may cause build cache misses: " + file.absolutePath)
+                }
+            }
+        }
     }
 
     normalization {

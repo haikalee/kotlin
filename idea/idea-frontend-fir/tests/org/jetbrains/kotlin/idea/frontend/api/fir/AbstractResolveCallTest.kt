@@ -43,8 +43,8 @@ abstract class AbstractResolveCallTest : @Suppress("DEPRECATION") KotlinLightCod
             val callInfos = analyze(file as KtFile) {
                 elements.map { element ->
                     when (element) {
-                        is KtCallExpression -> resolveCall(element)
-                        is KtBinaryExpression -> resolveCall(element)
+                        is KtCallExpression -> element.resolveCall()
+                        is KtBinaryExpression -> element.resolveCall()
                         else -> error("Selected should be either KtCallExpression or KtBinaryExpression but was $element")
                     }
                 }
@@ -90,7 +90,7 @@ private fun CallInfo.stringRepresentation(): String {
     fun KtType.render() = asStringForDebugging().replace('/', '.')
     fun Any.stringValue(): String? = when (this) {
         is KtFunctionLikeSymbol -> buildString {
-            append(if (this@stringValue is KtFunctionSymbol) fqName else "<constructor>")
+            append(if (this@stringValue is KtFunctionSymbol) callableIdIfNonLocal ?: name else "<constructor>")
             append("(")
             (this@stringValue as? KtFunctionSymbol)?.receiverType?.let { receiver ->
                 append("<receiver>: ${receiver.render()}")

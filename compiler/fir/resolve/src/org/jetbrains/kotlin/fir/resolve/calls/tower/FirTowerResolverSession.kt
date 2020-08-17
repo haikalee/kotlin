@@ -8,7 +8,6 @@ package org.jetbrains.kotlin.fir.resolve.calls.tower
 import org.jetbrains.kotlin.fir.FirSession
 import org.jetbrains.kotlin.fir.asReversedFrozen
 import org.jetbrains.kotlin.fir.declarations.FirRegularClass
-import org.jetbrains.kotlin.fir.declarations.isInner
 import org.jetbrains.kotlin.fir.expressions.FirExpression
 import org.jetbrains.kotlin.fir.expressions.FirQualifiedAccessExpression
 import org.jetbrains.kotlin.fir.expressions.FirResolvedQualifier
@@ -20,9 +19,7 @@ import org.jetbrains.kotlin.fir.resolve.transformers.body.resolve.firUnsafe
 import org.jetbrains.kotlin.fir.scopes.FirCompositeScope
 import org.jetbrains.kotlin.fir.scopes.FirScope
 import org.jetbrains.kotlin.fir.scopes.ProcessorAction
-import org.jetbrains.kotlin.fir.scopes.unsubstitutedScope
 import org.jetbrains.kotlin.fir.symbols.impl.FirCallableSymbol
-import org.jetbrains.kotlin.fir.symbols.impl.FirClassSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirRegularClassSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirTypeAliasSymbol
 import org.jetbrains.kotlin.fir.types.*
@@ -65,10 +62,6 @@ class FirTowerResolverSession internal constructor(
         nonLocalTowerDataElements.withIndex().mapNotNull { (index, element) ->
             element.implicitReceiver?.let { ImplicitReceiver(it, index) }
         }
-    }
-
-    fun runResolutionForDelegatingConstructor(info: CallInfo, constructorClassSymbol: FirClassSymbol<*>) {
-        manager.enqueueResolverTask { runResolverForDelegatingConstructorCall(info, constructorClassSymbol) }
     }
 
     fun runResolution(info: CallInfo) {
@@ -138,9 +131,6 @@ class FirTowerResolverSession internal constructor(
         extensionReceiver, extensionsOnly, includeInnerConstructors
     )
 
-    private fun FirScope.toConstructorScopeTowerLevel(): ConstructorScopeTowerLevel =
-        ConstructorScopeTowerLevel(session, this)
-
     private fun ReceiverValue.toMemberScopeTowerLevel(
         extensionReceiver: ReceiverValue? = null,
         implicitExtensionInvokeMode: Boolean = false
@@ -208,25 +198,6 @@ class FirTowerResolverSession internal constructor(
                     runResolverForExpressionReceiver(info, resolvedQualifier)
                 }
             }
-        }
-    }
-
-    private suspend fun runResolverForDelegatingConstructorCall(info: CallInfo, constructorClassSymbol: FirClassSymbol<*>) {
-        val scope = constructorClassSymbol.fir.unsubstitutedScope(session, components.scopeSession)
-        if (constructorClassSymbol is FirRegularClassSymbol && constructorClassSymbol.fir.isInner) {
-            // Search for inner constructors only
-            for ((implicitReceiverValue, depth) in implicitReceivers.drop(1)) {
-                processLevel(
-                    implicitReceiverValue.toMemberScopeTowerLevel(),
-                    info.copy(name = constructorClassSymbol.fir.name), TowerGroup.Implicit(depth)
-                )
-            }
-        } else {
-            // Search for non-inner constructors only
-            processLevel(
-                scope.toConstructorScopeTowerLevel(),
-                info, TowerGroup.Member
-            )
         }
     }
 

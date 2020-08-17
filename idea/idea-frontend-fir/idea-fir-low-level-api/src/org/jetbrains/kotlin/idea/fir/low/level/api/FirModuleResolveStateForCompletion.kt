@@ -24,7 +24,8 @@ internal class FirModuleResolveStateForCompletion(
     private val originalState: FirModuleResolveStateImpl
 ) : FirModuleResolveState() {
     override val moduleInfo: IdeaModuleInfo get() = originalState.moduleInfo
-    override val firSession: FirSession get() = originalState.firSession
+    override val firIdeSourcesSession: FirSession get() = originalState.firIdeSourcesSession
+    override val firIdeLibrariesSession: FirSession get() = originalState.firIdeSourcesSession
 
     private val psiToFirCache = PsiToFirCache(originalState.fileCache)
 
@@ -49,6 +50,10 @@ internal class FirModuleResolveStateForCompletion(
         psiToFirCache.getCachedMapping(element)?.let { return it }
         originalState.psiToFirCache.getCachedMapping(element)?.let { return it }
         return null
+    }
+
+    override fun <D : FirDeclaration> resolvedFirToPhase(declaration: D, toPhase: FirResolvePhase): D {
+        return originalState.resolvedFirToPhase(declaration, toPhase)
     }
 
     override fun lazyResolveFunctionForCompletion(

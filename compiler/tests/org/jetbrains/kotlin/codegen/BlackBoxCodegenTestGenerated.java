@@ -3316,6 +3316,89 @@ public class BlackBoxCodegenTestGenerated extends AbstractBlackBoxCodegenTest {
             }
         }
 
+        @TestMetadata("compiler/testData/codegen/box/casts/javaInterop")
+        @TestDataPath("$PROJECT_ROOT")
+        @RunWith(JUnit3RunnerWithInners.class)
+        public static class JavaInterop extends AbstractBlackBoxCodegenTest {
+            private void runTest(String testDataFilePath) throws Exception {
+                KotlinTestUtils.runTest(this::doTest, TargetBackend.JVM, testDataFilePath);
+            }
+
+            public void testAllFilesPresentInJavaInterop() throws Exception {
+                KotlinTestUtils.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("compiler/testData/codegen/box/casts/javaInterop"), Pattern.compile("^(.+)\\.kt$"), null, TargetBackend.JVM, true);
+            }
+
+            @TestMetadata("castWithWrongType.kt")
+            public void testCastWithWrongType() throws Exception {
+                runTest("compiler/testData/codegen/box/casts/javaInterop/castWithWrongType.kt");
+            }
+
+            @TestMetadata("implicitNotNullWithWrongType.kt")
+            public void testImplicitNotNullWithWrongType() throws Exception {
+                runTest("compiler/testData/codegen/box/casts/javaInterop/implicitNotNullWithWrongType.kt");
+            }
+
+            @TestMetadata("instanceOfWithWrongType.kt")
+            public void testInstanceOfWithWrongType() throws Exception {
+                runTest("compiler/testData/codegen/box/casts/javaInterop/instanceOfWithWrongType.kt");
+            }
+
+            @TestMetadata("noNullCheckOnCollectionContains.kt")
+            public void testNoNullCheckOnCollectionContains() throws Exception {
+                runTest("compiler/testData/codegen/box/casts/javaInterop/noNullCheckOnCollectionContains.kt");
+            }
+
+            @TestMetadata("noNullCheckOnCollectionRemove.kt")
+            public void testNoNullCheckOnCollectionRemove() throws Exception {
+                runTest("compiler/testData/codegen/box/casts/javaInterop/noNullCheckOnCollectionRemove.kt");
+            }
+
+            @TestMetadata("noNullCheckOnListIndexOf.kt")
+            public void testNoNullCheckOnListIndexOf() throws Exception {
+                runTest("compiler/testData/codegen/box/casts/javaInterop/noNullCheckOnListIndexOf.kt");
+            }
+
+            @TestMetadata("noNullCheckOnListLastIndexOf.kt")
+            public void testNoNullCheckOnListLastIndexOf() throws Exception {
+                runTest("compiler/testData/codegen/box/casts/javaInterop/noNullCheckOnListLastIndexOf.kt");
+            }
+
+            @TestMetadata("noNullCheckOnMapContainsKey.kt")
+            public void testNoNullCheckOnMapContainsKey() throws Exception {
+                runTest("compiler/testData/codegen/box/casts/javaInterop/noNullCheckOnMapContainsKey.kt");
+            }
+
+            @TestMetadata("noNullCheckOnMapContainsValue.kt")
+            public void testNoNullCheckOnMapContainsValue() throws Exception {
+                runTest("compiler/testData/codegen/box/casts/javaInterop/noNullCheckOnMapContainsValue.kt");
+            }
+
+            @TestMetadata("noNullCheckOnMapGet.kt")
+            public void testNoNullCheckOnMapGet() throws Exception {
+                runTest("compiler/testData/codegen/box/casts/javaInterop/noNullCheckOnMapGet.kt");
+            }
+
+            @TestMetadata("noNullCheckOnMapRemove.kt")
+            public void testNoNullCheckOnMapRemove() throws Exception {
+                runTest("compiler/testData/codegen/box/casts/javaInterop/noNullCheckOnMapRemove.kt");
+            }
+
+            @TestMetadata("nullCheckOnMapGetOrDefault.kt")
+            public void testNullCheckOnMapGetOrDefault() throws Exception {
+                runTest("compiler/testData/codegen/box/casts/javaInterop/nullCheckOnMapGetOrDefault.kt");
+            }
+
+            @TestMetadata("nullCheckOnMapRemove2.kt")
+            public void testNullCheckOnMapRemove2() throws Exception {
+                runTest("compiler/testData/codegen/box/casts/javaInterop/nullCheckOnMapRemove2.kt");
+            }
+
+            @TestMetadata("safeCastWithWrongType.kt")
+            public void testSafeCastWithWrongType() throws Exception {
+                runTest("compiler/testData/codegen/box/casts/javaInterop/safeCastWithWrongType.kt");
+            }
+        }
+
         @TestMetadata("compiler/testData/codegen/box/casts/literalExpressionAsGenericArgument")
         @TestDataPath("$PROJECT_ROOT")
         @RunWith(JUnit3RunnerWithInners.class)
@@ -7673,6 +7756,11 @@ public class BlackBoxCodegenTestGenerated extends AbstractBlackBoxCodegenTest {
                 runTestWithPackageReplacement("compiler/testData/codegen/box/coroutines/featureIntersection/destructuringInLambdas.kt", "kotlin.coroutines");
             }
 
+            @TestMetadata("funInterface.kt")
+            public void testFunInterface() throws Exception {
+                runTest("compiler/testData/codegen/box/coroutines/featureIntersection/funInterface.kt");
+            }
+
             @TestMetadata("inlineSuspendFinally.kt")
             public void testInlineSuspendFinally_1_2() throws Exception {
                 runTestWithPackageReplacement("compiler/testData/codegen/box/coroutines/featureIntersection/inlineSuspendFinally.kt", "kotlin.coroutines.experimental");
@@ -8306,6 +8394,11 @@ public class BlackBoxCodegenTestGenerated extends AbstractBlackBoxCodegenTest {
             @TestMetadata("overrideSuspendFun_Int.kt")
             public void testOverrideSuspendFun_Int_1_3() throws Exception {
                 runTestWithPackageReplacement("compiler/testData/codegen/box/coroutines/inlineClasses/overrideSuspendFun_Int.kt", "kotlin.coroutines");
+            }
+
+            @TestMetadata("returnResult.kt")
+            public void testReturnResult() throws Exception {
+                runTest("compiler/testData/codegen/box/coroutines/inlineClasses/returnResult.kt");
             }
         }
 
@@ -13684,6 +13777,11 @@ public class BlackBoxCodegenTestGenerated extends AbstractBlackBoxCodegenTest {
             runTest("compiler/testData/codegen/box/inference/capturedStarProjection.kt");
         }
 
+        @TestMetadata("coercionToUnitForLambdaReturnTypeWithFlexibleConstraint.kt")
+        public void testCoercionToUnitForLambdaReturnTypeWithFlexibleConstraint() throws Exception {
+            runTest("compiler/testData/codegen/box/inference/coercionToUnitForLambdaReturnTypeWithFlexibleConstraint.kt");
+        }
+
         @TestMetadata("coercionToUnitWithLastLambdaExpression.kt")
         public void testCoercionToUnitWithLastLambdaExpression() throws Exception {
             runTest("compiler/testData/codegen/box/inference/coercionToUnitWithLastLambdaExpression.kt");
@@ -13729,6 +13827,11 @@ public class BlackBoxCodegenTestGenerated extends AbstractBlackBoxCodegenTest {
             runTest("compiler/testData/codegen/box/inference/kt36446.kt");
         }
 
+        @TestMetadata("kt38664.kt")
+        public void testKt38664() throws Exception {
+            runTest("compiler/testData/codegen/box/inference/kt38664.kt");
+        }
+
         @TestMetadata("kt39824.kt")
         public void testKt39824() throws Exception {
             runTest("compiler/testData/codegen/box/inference/kt39824.kt");
@@ -13737,6 +13840,11 @@ public class BlackBoxCodegenTestGenerated extends AbstractBlackBoxCodegenTest {
         @TestMetadata("lastExpressionOfLambdaWithNothingConstraint.kt")
         public void testLastExpressionOfLambdaWithNothingConstraint() throws Exception {
             runTest("compiler/testData/codegen/box/inference/lastExpressionOfLambdaWithNothingConstraint.kt");
+        }
+
+        @TestMetadata("noCoercionToUniForNullableLambdaReturnType.kt")
+        public void testNoCoercionToUniForNullableLambdaReturnType() throws Exception {
+            runTest("compiler/testData/codegen/box/inference/noCoercionToUniForNullableLambdaReturnType.kt");
         }
 
         @TestMetadata("noNothingValueInsideSpecialCall.kt")
@@ -16657,6 +16765,11 @@ public class BlackBoxCodegenTestGenerated extends AbstractBlackBoxCodegenTest {
                 runTest("compiler/testData/codegen/box/jvm8/defaults/kt14243_prop.kt");
             }
 
+            @TestMetadata("kt40920.kt")
+            public void testKt40920() throws Exception {
+                runTest("compiler/testData/codegen/box/jvm8/defaults/kt40920.kt");
+            }
+
             @TestMetadata("oneImplementation.kt")
             public void testOneImplementation() throws Exception {
                 runTest("compiler/testData/codegen/box/jvm8/defaults/oneImplementation.kt");
@@ -17086,6 +17199,11 @@ public class BlackBoxCodegenTestGenerated extends AbstractBlackBoxCodegenTest {
                     runTest("compiler/testData/codegen/box/jvm8/defaults/noDefaultImpls/kt14243_2.kt");
                 }
 
+                @TestMetadata("kt40920.kt")
+                public void testKt40920() throws Exception {
+                    runTest("compiler/testData/codegen/box/jvm8/defaults/noDefaultImpls/kt40920.kt");
+                }
+
                 @TestMetadata("privateFunInInterface.kt")
                 public void testPrivateFunInInterface() throws Exception {
                     runTest("compiler/testData/codegen/box/jvm8/defaults/noDefaultImpls/privateFunInInterface.kt");
@@ -17263,6 +17381,26 @@ public class BlackBoxCodegenTestGenerated extends AbstractBlackBoxCodegenTest {
             @TestMetadata("invokeDefaultViaSuper.kt")
             public void testInvokeDefaultViaSuper() throws Exception {
                 runTest("compiler/testData/codegen/box/jvm8/javaDefaults/invokeDefaultViaSuper.kt");
+            }
+
+            @TestMetadata("kt40920.kt")
+            public void testKt40920() throws Exception {
+                runTest("compiler/testData/codegen/box/jvm8/javaDefaults/kt40920.kt");
+            }
+
+            @TestMetadata("kt40920_java.kt")
+            public void testKt40920_java() throws Exception {
+                runTest("compiler/testData/codegen/box/jvm8/javaDefaults/kt40920_java.kt");
+            }
+
+            @TestMetadata("kt40920_java2.kt")
+            public void testKt40920_java2() throws Exception {
+                runTest("compiler/testData/codegen/box/jvm8/javaDefaults/kt40920_java2.kt");
+            }
+
+            @TestMetadata("kt40920_map.kt")
+            public void testKt40920_map() throws Exception {
+                runTest("compiler/testData/codegen/box/jvm8/javaDefaults/kt40920_map.kt");
             }
 
             @TestMetadata("longChainOfKotlinExtendsFromJavaWithDefault.kt")
@@ -30273,6 +30411,11 @@ public class BlackBoxCodegenTestGenerated extends AbstractBlackBoxCodegenTest {
             runTest("compiler/testData/codegen/box/secondaryConstructors/fieldInitializerOptimization.kt");
         }
 
+        @TestMetadata("fieldInitializerOptimization_inlineClass.kt")
+        public void testFieldInitializerOptimization_inlineClass() throws Exception {
+            runTest("compiler/testData/codegen/box/secondaryConstructors/fieldInitializerOptimization_inlineClass.kt");
+        }
+
         @TestMetadata("generics.kt")
         public void testGenerics() throws Exception {
             runTest("compiler/testData/codegen/box/secondaryConstructors/generics.kt");
@@ -32275,6 +32418,11 @@ public class BlackBoxCodegenTestGenerated extends AbstractBlackBoxCodegenTest {
         @TestMetadata("notInLastPosition.kt")
         public void testNotInLastPosition() throws Exception {
             runTest("compiler/testData/codegen/box/vararg/notInLastPosition.kt");
+        }
+
+        @TestMetadata("referenceToContainsFromVarargParameter.kt")
+        public void testReferenceToContainsFromVarargParameter() throws Exception {
+            runTest("compiler/testData/codegen/box/vararg/referenceToContainsFromVarargParameter.kt");
         }
 
         @TestMetadata("singleAssignmentToVarargsInFunction.kt")

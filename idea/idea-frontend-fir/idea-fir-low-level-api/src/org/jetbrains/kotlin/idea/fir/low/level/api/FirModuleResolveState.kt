@@ -27,7 +27,8 @@ import org.jetbrains.kotlin.psi.KtFile
 
 abstract class FirModuleResolveState {
     abstract val moduleInfo: IdeaModuleInfo
-    abstract val firSession: FirSession
+    abstract val firIdeSourcesSession: FirSession
+    abstract val firIdeLibrariesSession: FirSession
 
     abstract fun getSessionFor(moduleInfo: IdeaModuleInfo): FirSession
 
@@ -40,6 +41,8 @@ abstract class FirModuleResolveState {
 
     // todo temporary, used only in completion
     abstract fun getCachedMappingForCompletion(element: KtElement): FirElement?
+
+    abstract fun <D : FirDeclaration> resolvedFirToPhase(declaration: D, toPhase: FirResolvePhase): D
 
     // todo temporary, used only in completion
     internal abstract fun lazyResolveFunctionForCompletion(
@@ -55,7 +58,8 @@ abstract class FirModuleResolveState {
 
 internal open class FirModuleResolveStateImpl(
     override val moduleInfo: IdeaModuleInfo,
-    override val firSession: FirSession,
+    override val firIdeSourcesSession: FirSession,
+    override val firIdeLibrariesSession: FirSession,
     private val sessionProvider: FirIdeSessionProvider,
     val firFileBuilder: FirFileBuilder,
     val fileCache: ModuleFileCache,
@@ -75,6 +79,11 @@ internal open class FirModuleResolveStateImpl(
 
     override fun recordPsiToFirMappingsForCompletionFrom(fir: FirDeclaration, firFile: FirFile, ktFile: KtFile) {
         psiToFirCache.recordElementsForCompletionFrom(fir, firFile, ktFile)
+    }
+
+    override fun <D : FirDeclaration> resolvedFirToPhase(declaration: D, toPhase: FirResolvePhase): D {
+        elementBuilder.lazyResolveDeclaration(declaration, fileCache, toPhase)
+        return declaration
     }
 
     override fun getCachedMappingForCompletion(element: KtElement): FirElement? =

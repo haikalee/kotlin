@@ -348,13 +348,15 @@ class PropertyReferenceCodegen(
             if (isGetter) {
                 value.put(OBJECT_TYPE, targetKotlinType, v)
             } else {
-                value.store(
-                    StackValue.local(
-                        codegen.frameMap.getIndex(
-                            codegen.context.functionDescriptor.valueParameters.last()
-                        ),
-                        OBJECT_TYPE, if (targetKotlinType.isInlineClassType()) targetKotlinType else null
+                val local = StackValue.local(
+                    codegen.frameMap.getIndex(
+                        codegen.context.functionDescriptor.valueParameters.last()
                     ),
+                    OBJECT_TYPE, null
+                )
+
+                value.store(
+                    if (targetKotlinType.isInlineClassType()) StackValue.coercion(local, OBJECT_TYPE, targetKotlinType) else local,
                     v
                 )
             }

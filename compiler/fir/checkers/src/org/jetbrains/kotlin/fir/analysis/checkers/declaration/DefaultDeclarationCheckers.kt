@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.fir.analysis.checkers.declaration
 
+import org.jetbrains.kotlin.fir.analysis.cfa.AbstractFirCfaPropertyAssignmentChecker
 import org.jetbrains.kotlin.fir.analysis.cfa.FirCallsEffectAnalyzer
 import org.jetbrains.kotlin.fir.analysis.cfa.FirPropertyInitializationAnalyzer
 import org.jetbrains.kotlin.fir.analysis.cfa.FirReturnsImpliesAnalyzer
@@ -23,7 +24,7 @@ object CommonDeclarationCheckers : DeclarationCheckers() {
         FirTypeParametersInObjectChecker,
         FirConflictsChecker,
         FirConstructorInInterfaceChecker,
-    )
+    ) + ExtendedDeclarationCheckers.declarationCheckers
 
     override val memberDeclarationCheckers: List<FirMemberDeclarationChecker> = listOf(
         FirInfixFunctionDeclarationChecker,
@@ -38,7 +39,7 @@ object CommonDeclarationCheckers : DeclarationCheckers() {
         FirInterfaceWithSuperclassChecker,
         FirEnumClassSimpleChecker,
         FirSealedSupertypeChecker,
-    )
+    ) + ExtendedDeclarationCheckers.memberDeclarationCheckers
 
     override val regularClassCheckers: List<FirRegularClassChecker> = listOf(
 
@@ -46,11 +47,14 @@ object CommonDeclarationCheckers : DeclarationCheckers() {
 
     override val constructorCheckers: List<FirConstructorChecker> = listOf(
         FirConstructorAllowedChecker,
-    )
+    ) + ExtendedDeclarationCheckers.constructorCheckers
 
     override val controlFlowAnalyserCheckers: List<FirControlFlowChecker> = listOf(
-        FirPropertyInitializationAnalyzer,
         FirCallsEffectAnalyzer,
         FirReturnsImpliesAnalyzer
-    )
+    ) + ExtendedDeclarationCheckers.controlFlowAnalyserCheckers
+
+    override val variableAssignmentCfaBasedCheckers: List<AbstractFirCfaPropertyAssignmentChecker> = listOf(
+        FirPropertyInitializationAnalyzer
+    ) + ExtendedDeclarationCheckers.variableAssignmentCfaBasedCheckers
 }
